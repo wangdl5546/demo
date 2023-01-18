@@ -183,7 +183,7 @@ export default {
         pageSize: 10,
         name: undefined,
         status: undefined,
-        handlerName: 'exchange'
+        handlerName: 'model'
       },
       // 表单参数
       form: {},

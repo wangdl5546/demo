@@ -70,7 +70,7 @@ export const constantRoutes = [
     redirect: 'index',
     children: [{
         path: 'index',
-        component: (resolve) => require(['@/views/index'], resolve),
+        component: (resolve) => require(['@/views/system/user/index'], resolve),
         name: '首页',
         meta: {title: '首页', icon: 'dashboard', affix: true}
       }

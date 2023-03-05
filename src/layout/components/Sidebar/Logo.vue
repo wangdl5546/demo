@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: '智慧农业信息化云服务支撑平台',
+      title: '物联网智慧水产',
       logo: logoImg
     }
   }

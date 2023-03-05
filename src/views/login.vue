@@ -136,7 +136,7 @@ export default {
         mobile: "",
         mobileCode: "",
         rememberMe: false,
-        tenantName: "智慧农业信息化云服务支撑平台",
+        tenantName: "物联网智慧水产",
       },
       scene: 21,
 

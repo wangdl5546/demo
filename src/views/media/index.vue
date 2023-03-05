@@ -193,7 +193,7 @@ export default {
       if(data.type === 'dir'){
         return
       }
-      this.setPlayUrl(`http://60.205.206.198:10021/live/${data.devId}.flv`,this.$data.playerIdx%this.$data.spilt)
+      this.setPlayUrl(`http://192.168.6.100:10021/live/${data.devId}.flv`,this.$data.playerIdx%this.$data.spilt)
       this.$data.playerIdx = this.$data.playerIdx + 1
     },
     contextMenuEvent: function (device, event, data, isCatalog) {

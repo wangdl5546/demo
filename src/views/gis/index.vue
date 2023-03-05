@@ -224,7 +224,7 @@ export default {
         data: data
       }], (item) => {
         console.log(item[0])
-        let url = `http://60.205.206.198:10021/live/${item[0].devId}.flv`
+        let url = `http://192.168.6.100:10021/live/${item[0].devId}.flv`
         this.$data.dialogTitle = item[0].label
         this.$data.videoUrl = url
         this.$data.dialogVisible = true

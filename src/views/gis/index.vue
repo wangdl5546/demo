@@ -82,7 +82,7 @@ export default {
       videoUrl: '',
       deviceTree: [{
         id: 1,
-        label: '东厂房',
+        label: '池塘1',
         type: 'dir',
         children: [{
           id: 4,
@@ -106,7 +106,7 @@ export default {
         }]
       }, {
         id: 2,
-        label: '西厂房',
+        label: '池塘2',
         type: 'dir',
         children: [{
           id: 5,
@@ -125,7 +125,7 @@ export default {
         }]
       }, {
         id: 3,
-        label: '中心厂房',
+        label: '池塘3',
         type: 'dir',
         children: [{
           id: 7,

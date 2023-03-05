@@ -47,14 +47,13 @@ export default {
     },
     methods: {
       init(){
-
-        let center = fromLonLat([116.41020, 39.915119]);
+        let center = fromLonLat([116.41020, 39.915209]);
         if (mapParam.center) {
           center = fromLonLat(mapParam.center);
         }
         const view = new View({
           center: center,
-          zoom:  mapParam.zoom || 10,
+          zoom:  mapParam.zoom || 19,
           projection: this.projection,
           maxZoom: mapParam.maxZoom || 19,
           minZoom: mapParam.minZoom || 1,

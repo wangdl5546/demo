@@ -53,7 +53,7 @@ export default {
         }
         const view = new View({
           center: center,
-          zoom:  mapParam.zoom || 19,
+          zoom:   19,
           projection: this.projection,
           maxZoom: mapParam.maxZoom || 19,
           minZoom: mapParam.minZoom || 1,

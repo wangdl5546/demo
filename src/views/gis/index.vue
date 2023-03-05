@@ -181,8 +181,12 @@ export default {
       this.longitudeStr = "longitude";
       this.latitudeStr = "latitude";
     }
+
   },
   mounted() {
+    setInterval(() => {
+      this.initDevice()
+    }, 1000);
   },
   destroyed() {
 

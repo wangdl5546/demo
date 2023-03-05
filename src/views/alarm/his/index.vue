@@ -19,7 +19,7 @@
             <el-input v-model="queryParams.username" placeholder="请输入设备名称" clearable style="width: 240px"
                       @keyup.enter.native="handleQuery"/>
           </el-form-item>
-          <el-form-item label="创建时间" prop="createTime">
+          <el-form-item label="告警时间" prop="createTime">
             <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
               range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
           </el-form-item>
@@ -46,38 +46,12 @@
         </el-row>
 
         <el-table v-loading="loading" :data="userList">
-          <el-table-column label="设备编码" align="center" key="id" prop="id" v-if="columns[0].visible"  width="240"/>
-          <el-table-column label="设备名称" align="center" key="username" prop="username" v-if="columns[1].visible" :show-overflow-tooltip="true"  width="240"/>
-          <el-table-column label="设备状态" key="status" v-if="columns[5].visible" align="center"  width="240">
-            <template v-slot="scope">
-              <el-switch v-model="scope.row.status" :active-value="0" :inactive-value="1" @change="handleStatusChange(scope.row)" />
-            </template>
-          </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="240">
+          <el-table-column label="告警ID" align="center" key="id" prop="id" v-if="columns[0].visible"  width="240"/>
+          <el-table-column label="告警名称" align="center" key="username" prop="username" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
+          <el-table-column label="设备名称" align="center" key="devicename" prop="devicename" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
+          <el-table-column label="告警时间" align="center" prop="createTime" v-if="columns[6].visible">
             <template v-slot="scope">
               <span>{{ parseTime(scope.row.createTime) }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-            <template v-slot="scope">
-              <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                         v-hasPermi="['system:user:update']">修改</el-button>
-              <el-button size="mini" type="text" icon="el-icon-edit" @click="handleAlarmUpdate(scope.row)"
-                         v-hasPermi="['system:user:update']">告警配置</el-button>
-              <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                         v-hasPermi="['system:user:update']">删除</el-button>
-              <!-- <el-dropdown  @command="(command) => handleCommand(command, scope.$index, scope.row)"
-                            v-hasPermi="['system:user:delete', 'system:user:update-password', 'system:permission:assign-user-role']">
-                <el-button size="mini" type="text" icon="el-icon-d-arrow-right">更多</el-button>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="handleDelete" v-if="scope.row.id !== 1" size="mini" type="text" icon="el-icon-delete"
-                                    v-hasPermi="['system:user:delete']">删除</el-dropdown-item>
-                  <el-dropdown-item command="handleResetPwd" size="mini" type="text" icon="el-icon-key"
-                                    v-hasPermi="['system:user:update-password']">重置密码</el-dropdown-item>
-                  <el-dropdown-item command="handleRole" size="mini" type="text" icon="el-icon-circle-check"
-                                    v-hasPermi="['system:permission:assign-user-role']">分配角色</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown> -->
             </template>
           </el-table-column>
         </el-table>
@@ -319,24 +293,33 @@ export default {
       this.loading = true;
       listUser(this.queryParams).then(response => {
           console.log(response.data.list)
-          response.data.list[0].username = '东区PH采集器'
-          response.data.list[0].nickname = '东区PH采集器'
-          response.data.list[1].username = '溶解氧检测器'
-          response.data.list[1].nickname = '溶解氧检测器'
-          response.data.list[2].username = '余氯检测器'
-          response.data.list[2].nickname = '余氯检测器'
-          response.data.list[3].username = '亚硝酸盐检测器'
-          response.data.list[3].nickname = '亚硝酸盐检测器'
-          response.data.list[4].username = '电导率检测仪'
-          response.data.list[4].nickname = '电导率检测仪'
-          response.data.list[5].username = '氨氮检测仪'
-          response.data.list[5].nickname = '氨氮检测仪'
-          response.data.list[6].username = '盐度检测仪'
-          response.data.list[6].nickname = '盐度检测仪'
-          response.data.list[7].username = '温度计'
-          response.data.list[7].nickname = '温度计'
-          response.data.list[8].username = '浊度检测仪'
-          response.data.list[8].nickname = '浊度检测仪'
+          response.data.list[0].username = '东区PH采集器提示PH过低'
+          response.data.list[0].nickname = '东区PH采集器提示PH过低'
+          response.data.list[0].devicename = '东区PH采集器'
+          response.data.list[1].username = '溶解氧检测器提示水质氧含量过低'
+          response.data.list[1].nickname = '溶解氧检测器提示水质氧含量过低'
+          response.data.list[1].devicename = '解氧检测器'
+          response.data.list[2].username = '余氯检测器提示水质氯含量过高'
+          response.data.list[2].nickname = '余氯检测器提示水质氯含量过高'
+          response.data.list[2].devicename = '余氯检测器'
+          response.data.list[3].username = '亚硝酸盐检测器提示亚硝酸盐含量过高'
+          response.data.list[3].nickname = '亚硝酸盐检测器提示亚硝酸盐含量过高'
+          response.data.list[3].devicename = '亚硝酸盐检测器'
+          response.data.list[4].username = '电导率检测仪提示电导率异常'
+          response.data.list[4].nickname = '电导率检测仪提示电导率异常'
+          response.data.list[4].devicename = '电导率检测仪'
+          response.data.list[5].username = '氨氮检测仪提示氨氮含量过高'
+          response.data.list[5].nickname = '氨氮检测仪提示氨氮含量过高'
+          response.data.list[5].devicename = '氨氮检测仪'
+          response.data.list[6].username = '盐度检测仪提示水质盐度过高'
+          response.data.list[6].nickname = '盐度检测仪提示水质盐度过高'
+          response.data.list[6].devicename = '盐度检测仪'
+          response.data.list[7].username = '温度计提示当前温度过高'
+          response.data.list[7].nickname = '温度计提示当前温度过高'
+          response.data.list[7].devicename = '温度计'
+          response.data.list[8].username = '浊度检测仪提示当前水质浑浊'
+          response.data.list[8].nickname = '浊度检测仪提示当前水质浑浊'
+          response.data.list[8].devicename = '浊度检测仪'
           this.userList = response.data.list;
           this.total = response.data.total;
           this.loading = false;

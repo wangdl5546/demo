@@ -15,8 +15,8 @@
       <!--用户数据-->
       <el-col>
         <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-          <el-form-item label="设备名称" prop="username">
-            <el-input v-model="queryParams.username" placeholder="请输入设备名称" clearable style="width: 240px"
+          <el-form-item label="名称" prop="username">
+            <el-input v-model="queryParams.username" placeholder="请输入" clearable style="width: 240px"
                       @keyup.enter.native="handleQuery"/>
           </el-form-item>
           <el-form-item label="创建时间" prop="createTime">
@@ -46,12 +46,9 @@
         </el-row>
 
         <el-table v-loading="loading" :data="userList">
-          <el-table-column label="设备编码" align="center" key="id" prop="id" v-if="columns[0].visible"  width="240"/>
-          <el-table-column label="设备名称" align="center" key="username" prop="username" v-if="columns[1].visible" :show-overflow-tooltip="true"  width="240"/>
-          <el-table-column label="设备状态" key="status" v-if="columns[5].visible" align="center"  width="240">
-            <template v-slot="scope">
-              <el-switch v-model="scope.row.status" :active-value="0" :inactive-value="1" @change="handleStatusChange(scope.row)" />
-            </template>
+          <el-table-column label="ID" align="center" key="id" prop="id" v-if="columns[0].visible"  width="240"/>
+          <el-table-column label="名称" align="center" key="username" prop="username" v-if="columns[1].visible" :show-overflow-tooltip="true"  width="240"/>
+          <el-table-column label="描述" key="status" v-if="columns[5].visible" align="center"  width="240">
           </el-table-column>
           <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="240">
             <template v-slot="scope">
@@ -62,8 +59,6 @@
             <template v-slot="scope">
               <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                          v-hasPermi="['system:user:update']">修改</el-button>
-              <el-button size="mini" type="text" icon="el-icon-edit" @click="handleAlarmUpdate(scope.row)"
-                         v-hasPermi="['system:user:update']">告警配置</el-button>
               <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
                          v-hasPermi="['system:user:update']">删除</el-button>
               <!-- <el-dropdown  @command="(command) => handleCommand(command, scope.$index, scope.row)"
@@ -92,20 +87,28 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="设备名称" prop="nickname">
-              <el-input v-model="form.nickname" placeholder="请输入设备名称" />
+            <el-form-item label="图像" prop="nickname">
+              <el-image style="width: 100px; height: 100px" :src="'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'" :fit="fit" />
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
-            <el-form-item label="归属部门" prop="deptId">
-              <treeselect v-model="form.deptId" :options="deptOptions" :show-count="true" :clearable="false"
-                          placeholder="请选择归属部门" :normalizer="normalizer"/>
+            <el-form-item label="名称" prop="nickname">
+              <el-input v-model="form.nickname" placeholder="请输入" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注">
+            <el-form-item label="描述">
+              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="专家意见">
               <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
             </el-form-item>
           </el-col>
@@ -319,24 +322,24 @@ export default {
       this.loading = true;
       listUser(this.queryParams).then(response => {
           console.log(response.data.list)
-          response.data.list[0].username = '东区PH采集器'
-          response.data.list[0].nickname = '东区PH采集器'
-          response.data.list[1].username = '溶解氧检测器'
-          response.data.list[1].nickname = '溶解氧检测器'
-          response.data.list[2].username = '余氯检测器'
-          response.data.list[2].nickname = '余氯检测器'
-          response.data.list[3].username = '亚硝酸盐检测器'
-          response.data.list[3].nickname = '亚硝酸盐检测器'
-          response.data.list[4].username = '电导率检测仪'
-          response.data.list[4].nickname = '电导率检测仪'
-          response.data.list[5].username = '氨氮检测仪'
-          response.data.list[5].nickname = '氨氮检测仪'
-          response.data.list[6].username = '盐度检测仪'
-          response.data.list[6].nickname = '盐度检测仪'
-          response.data.list[7].username = '温度计'
-          response.data.list[7].nickname = '温度计'
-          response.data.list[8].username = '浊度检测仪'
-          response.data.list[8].nickname = '浊度检测仪'
+          response.data.list[0].username = '纤毛虫'
+          response.data.list[0].nickname = '纤毛虫'
+          response.data.list[1].username = '车轮虫'
+          response.data.list[1].nickname = '车轮虫'
+          response.data.list[2].username = '协管虫'
+          response.data.list[2].nickname = '协管虫'
+          response.data.list[3].username = '小瓜虫'
+          response.data.list[3].nickname = '小瓜虫'
+          response.data.list[4].username = '聚缩虫'
+          response.data.list[4].nickname = '聚缩虫'
+          response.data.list[5].username = '累枝虫'
+          response.data.list[5].nickname = '累枝虫'
+          response.data.list[6].username = '杯体虫'
+          response.data.list[6].nickname = '杯体虫'
+          response.data.list[7].username = '毛管虫'
+          response.data.list[7].nickname = '毛管虫'
+          response.data.list[8].username = '鞭毛虫'
+          response.data.list[8].nickname = '鞭毛虫'
           this.userList = response.data.list;
           this.total = response.data.total;
           this.loading = false;
@@ -424,7 +427,7 @@ export default {
       this.getTreeselect();
       // 打开表单，并设置初始化
       this.open = true;
-      this.title = "添加设备";
+      this.title = "添加防治项";
       this.form.password = this.initPassword;
     },
     /** 修改按钮操作 */
@@ -435,7 +438,7 @@ export default {
       getUser(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改设备";
+        this.title = "修改防治项";
         this.form.password = "";
       });
     },

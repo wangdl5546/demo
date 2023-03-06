@@ -4,5 +4,6 @@
   </ContentWrap>
 </template>
 <script setup lang="ts" name="fishlog">
-const src = 'http://60.205.206.198:10015/#/chart/preview/15'
+import { getAccessToken } from "../../../utils/auth";
+const src = 'http://60.205.206.198:10015/#/chart/preview/15?token='+getAccessToken()
 </script>

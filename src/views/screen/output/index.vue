@@ -4,5 +4,6 @@
   </ContentWrap>
 </template>
 <script setup lang="ts" name="output">
-const src = 'http://60.205.206.198:10015/#/chart/preview/13'
+import { getAccessToken } from "../../../utils/auth";
+const src = 'http://60.205.206.198:10015/#/chart/preview/13?token='+getAccessToken()
 </script>

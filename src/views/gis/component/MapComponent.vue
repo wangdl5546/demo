@@ -47,10 +47,10 @@ export default {
     },
     methods: {
       init(){
-        let center = fromLonLat([116.41020, 39.915209]);
-        if (mapParam.center) {
-          center = fromLonLat(mapParam.center);
-        }
+        let center = fromLonLat([120.113350,30.202395]);
+        // if (mapParam.center) {
+        //   center = fromLonLat(mapParam.center);
+        // }
         const view = new View({
           center: center,
           zoom:   19,

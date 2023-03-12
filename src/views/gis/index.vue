@@ -93,15 +93,16 @@ export default {
             label: '摄像头1',
             devId: 1,
             type: 'dev',
-            lat: 39.915209,
-            lng: 116.41020,
+            //120.113350,30.202395
+            lat: 30.202495,
+            lng: 120.114350,
           }, {
             id: 10,
             label: '摄像头2',
             devId: 2,
             type: 'dev',
-            lat: 39.915209,
-            lng: 116.41130,
+            lat: 30.202595,
+            lng: 120.115350,
           }]
         }]
       }, {
@@ -113,15 +114,15 @@ export default {
           label: '摄像头1',
           devId: 3,
           type: 'dev',
-          lat: 39.915309,
-          lng: 116.41115,
+          lat: 30.202695,
+          lng: 120.116350,
         }, {
           id: 6,
           label: '摄像头2',
           devId: 4,
           type: 'dev',
-          lat: 39.915319,
-          lng: 116.41015,
+          lat: 30.203695,
+          lng: 120.113450,
         }]
       }, {
         id: 3,
@@ -132,36 +133,36 @@ export default {
           label: '摄像头1',
           devId: 5,
           type: 'dev',
-          lat: 39.915419,
-          lng: 116.41225,
+          lat: 30.204695,
+          lng: 120.113550,
         }, {
           id: 8,
           label: '摄像头2',
           devId: 6,
           type: 'dev',
-          lat: 39.915429,
-          lng: 116.41020,
+          lat: 30.205695,
+          lng: 120.113650,
         }, {
           id: 18,
           label: '摄像头3',
           devId: 7,
           type: 'dev',
-          lat: 39.915029,
-          lng: 116.41125,
+          lat: 30.206695,
+          lng: 120.113750,
         }, {
           id: 19,
           label: '摄像头4',
           devId: 8,
           type: 'dev',
-          lat: 39.915029,
-          lng: 116.41015,
+          lat: 30.202795,
+          lng: 120.113850,
         }, {
           id: 20,
           label: '摄像头5',
           devId: 9,
           type: 'dev',
-          lat: 39.915139,
-          lng: 116.41020,
+          lat: 30.202795,
+          lng: 120.113950,
         }]
       }],
       defaultProps: {

@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: '物联网智慧水产',
+      title: '惠民市场管理服务平台',
       logo: logoImg
     }
   }

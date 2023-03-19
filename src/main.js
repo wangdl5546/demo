@@ -24,7 +24,18 @@ import RightToolbar from "@/components/RightToolbar"
 // import hljs from 'highlight.js'
 // import 'highlight.js/styles/github-gist.css'
 import {DICT_TYPE, getDictDataLabel, getDictDatas, getDictDatas2} from "@/utils/dict";
-
+import dataV from '@jiaminghi/data-view';
+Vue.use(dataV);
+// 按需引入vue-awesome图标
+import Icon from 'vue-awesome/components/Icon';
+import 'vue-awesome/icons/chart-bar.js';
+import 'vue-awesome/icons/chart-area.js';
+import 'vue-awesome/icons/chart-pie.js';
+import 'vue-awesome/icons/chart-line.js';
+import 'vue-awesome/icons/align-left.js';
+//引入echart
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
 Vue.prototype.getConfigKey = getConfigKey
@@ -90,7 +101,12 @@ Vue.use(Element, {
 });
 
 Vue.config.productionTip = false
+Vue.component('icon', Icon);
+// 适配flex
+import '@/common/flexible.js';
 
+// 引入全局css
+import '@/assets/scss/style.scss';
 new Vue({
   el: '#app',
   router,

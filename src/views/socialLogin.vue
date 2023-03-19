@@ -9,7 +9,7 @@
       <div class="field">
         <!-- [移动端]标题 -->
         <h2 class="mobile-title">
-          <h3 class="title">基于物联网的智慧水产精细化养殖服务平台</h3>
+          <h3 class="title">惠民市场管理服务平台</h3>
         </h2>
 
         <!-- 表单 -->

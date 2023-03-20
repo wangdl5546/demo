@@ -23,15 +23,15 @@ export default {
       config: {
         header: ["商户", "门店", "优惠率"],
         data: [
-          ["强盛小灵通专卖", "dev-1", "<span  class='colorGrass'>↑75%</span>"],
+          ["强盛肉铺", "dev-1", "<span  class='colorGrass'>↑75%</span>"],
           ["阿强鱼档", "dev-2", "<span  class='colorRed'>↓33%</span>"],
           ["星期八烧烤", "dev-3", "<span  class='colorGrass'>↑100%</span>"],
           ["阿兰小龙虾", "rea-1", "<span  class='colorGrass'>↑94%</span>"],
-          ["龙哥游戏厅", "rea-2", "<span  class='colorGrass'>↑95%</span>"],
-          ["大嫂成衣旗舰店", "fix-2", "<span  class='colorGrass'>↑63%</span>"],
-          ["兴盛手表维修", "fix-4", "<span  class='colorGrass'>↑84%</span>"],
-          ["小强电动车", "fix-7", "<span  class='colorRed'>↓46%</span>"],
-          ["阿虎面店", "dev-2", "<span  class='colorRed'>↓13%</span>"],
+          ["龙哥蔬菜铺", "rea-2", "<span  class='colorGrass'>↑95%</span>"],
+          ["大嫂水果铺", "fix-2", "<span  class='colorGrass'>↑63%</span>"],
+          ["兴盛鱼虾蟹", "fix-4", "<span  class='colorGrass'>↑84%</span>"],
+          ["小强绿色猪肉", "fix-7", "<span  class='colorRed'>↓46%</span>"],
+          ["阿虎面类", "dev-2", "<span  class='colorRed'>↓13%</span>"],
           ["小龙杂货铺", "dev-9", "<span  class='colorGrass'>↑76%</span>"]
         ],
         rowNum: 7, //表格行数

@@ -47,7 +47,7 @@
               style="width: 6.25rem; background-color: #0f1325; text-align: right;"
             >
               <span class="react-after"></span>
-              <span class="text">2023年03月16日 周一 12:00</span>
+              <span class="text">2020年12月1日 周一 12:00</span>
             </div>
           </div>
         </div>

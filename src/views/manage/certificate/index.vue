@@ -46,24 +46,15 @@
           <el-table-column label="商户地址" align="center" key="username" prop="username" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
           <el-table-column label="经营种类" align="center" key="nickname" prop="nickname" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
           <el-table-column label="身份证" align="center" key="email" prop="email" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
-          <el-table-column label="证件详情" align="center" class-name="small-padding fixed-width">
+          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template v-slot="scope">
+              <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate111(scope.row)"
+                         v-hasPermi="['system:user:update']">查看证件</el-button>
               <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                         v-hasPermi="['system:user:update']">查看</el-button>
+                         v-hasPermi="['system:user:update']">修改</el-button>
               <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
                          v-hasPermi="['system:user:update']">删除</el-button>
-              <!-- <el-dropdown  @command="(command) => handleCommand(command, scope.$index, scope.row)"
-                            v-hasPermi="['system:user:delete', 'system:user:update-password', 'system:permission:assign-user-role']">
-                <el-button size="mini" type="text" icon="el-icon-d-arrow-right">更多</el-button>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="handleDelete" v-if="scope.row.id !== 1" size="mini" type="text" icon="el-icon-delete"
-                                    v-hasPermi="['system:user:delete']">删除</el-dropdown-item>
-                  <el-dropdown-item command="handleResetPwd" size="mini" type="text" icon="el-icon-key"
-                                    v-hasPermi="['system:user:update-password']">重置密码</el-dropdown-item>
-                  <el-dropdown-item command="handleRole" size="mini" type="text" icon="el-icon-circle-check"
-                                    v-hasPermi="['system:permission:assign-user-role']">分配角色</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown> -->
+
             </template>
           </el-table-column>
         </el-table>
@@ -75,6 +66,37 @@
 
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="商户地址" prop="username">
+              <el-input v-model="form.username" placeholder="请输入商户地址" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="经营种类" prop="nickname">
+              <el-input v-model="form.nickname" placeholder="请输入经营种类" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="身份证" prop="email">
+              <el-input v-model="form.email" placeholder="请输入身份证" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
+
+    <el-dialog :title="title" :visible.sync="open11" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
@@ -92,7 +114,6 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -225,32 +246,6 @@ export default {
         { key: 5, label: `设备设备`, visible: true },
         { key: 6, label: `创建时间`, visible: true }
       ],
-      // 表单校验
-      rules: {
-        username: [
-          { required: true, message: "设备名称不能为空", trigger: "blur" }
-        ],
-        nickname: [
-          { required: true, message: "设备名称不能为空", trigger: "blur" }
-        ],
-        password: [
-          { required: true, message: "设备名称不能为空", trigger: "blur" }
-        ],
-        email: [
-          {
-            type: "email",
-            message: "'请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
-          }
-        ],
-        mobile: [
-          {
-            pattern: /^(?:(?:\+|00)86)?1(?:3[\d]|4[5-79]|5[0-35-9]|6[5-7]|7[0-8]|8[\d]|9[189])\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur"
-          }
-        ]
-      },
       // 是否显示弹出层（角色权限）
       openRole: false,
 
@@ -389,6 +384,7 @@ export default {
     cancel() {
       this.open = false;
       this.openAlarm = false;
+      this.open11 = false;
       this.reset();
     },
     // 取消按钮（角色权限）
@@ -431,20 +427,18 @@ export default {
       this.getTreeselect();
       // 打开表单，并设置初始化
       this.open = true;
-      this.title = "添加设备";
+      this.title = "添加";
       this.form.password = this.initPassword;
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
-      this.getTreeselect();
-      const id = row.id;
-      getUser(id).then(response => {
-        this.form = response.data;
+      this.form = row;
         this.open = true;
-        this.title = "修改设备";
-        this.form.password = "";
-      });
+        this.title = "修改";
+    },
+    handleUpdate111(row) {
+      this.open11 = true;
+      this.title = "证件";
     },
     handleAlarmUpdate(row) {
       this.openAlarm = true
@@ -485,20 +479,15 @@ export default {
     /** 提交按钮 */
     submitForm: function() {
       this.openAlarm = false
+      this.open11 = false;
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id !== undefined) {
-            updateUser(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+            this.$modal.msgSuccess("修改成功");
               this.open = false;
-              this.getList();
-            });
           } else {
-            addUser(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+            this.$modal.msgSuccess("新增成功");
               this.open = false;
-              this.getList();
-            });
           }
         }
       });
@@ -518,13 +507,7 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除设备编码为"' + ids + '"的数据项?').then(function() {
-          return delUser(ids);
-        }).then(() => {
-          this.getList();
-          this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal.msgSuccess("删除成功");
     },
     /** 导出按钮操作 */
     handleExport() {

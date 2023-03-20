@@ -28,10 +28,10 @@
               <el-option v-for="dict in statusDictDatas" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
             </el-select>
           </el-form-item>
-          <el-form-item label="创建时间" prop="createTime">
+          <!--<el-form-item label="创建时间" prop="createTime">
             <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
               range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-          </el-form-item>
+          </el-form-item>-->
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
             <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -65,11 +65,11 @@
               <el-switch v-model="scope.row.status" :active-value="0" :inactive-value="1" @change="handleStatusChange(scope.row)" />
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="160">
+          <!--<el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="160">
             <template v-slot="scope">
               <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
-          </el-table-column>
+          </el-table-column>-->
           <el-table-column label="操作" align="center" width="160" class-name="small-padding fixed-width">
             <template v-slot="scope">
               <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"

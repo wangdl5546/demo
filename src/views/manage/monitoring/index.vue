@@ -43,7 +43,6 @@
 
         <el-table v-loading="loading" :data="userList">
           <el-table-column label="ID" align="center" key="id" prop="id" v-if="columns[0].visible"  width="240"/>
-
           <el-table-column label="监测项目" align="center" key="username" prop="username" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
           <el-table-column label="监测内容" align="center" key="nickname" prop="nickname" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
           <el-table-column label="摊位" align="center" key="email" prop="email" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
@@ -52,8 +51,7 @@
             <template v-slot="scope">
               <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
-          </el-table-column>
-          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+          </el-table-column><el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template v-slot="scope">
               <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                           v-hasPermi="['system:post:update']">修改</el-button>
@@ -71,7 +69,6 @@
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-
         <el-row>
           <el-col :span="12">
             <el-form-item label="监测项目" prop="username">
@@ -466,7 +463,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id !== undefined) {
-            this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess("修改成功");
               this.open = false;
           } else {
             this.$modal.msgSuccess("新增成功");
@@ -490,6 +487,7 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
+      const ids = row.id || this.ids;
       this.$modal.msgSuccess("删除成功");
     },
     /** 导出按钮操作 */

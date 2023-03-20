@@ -15,8 +15,8 @@
       <!--用户数据-->
       <el-col>
         <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-          <el-form-item label="摊位" prop="username">
-            <el-input v-model="queryParams.username" placeholder="摊位" clearable style="width: 240px"
+          <el-form-item label="地点" prop="username">
+            <el-input v-model="queryParams.username" placeholder="地点" clearable style="width: 240px"
                       @keyup.enter.native="handleQuery"/>
           </el-form-item>
           <el-form-item>
@@ -43,17 +43,13 @@
 
         <el-table v-loading="loading" :data="userList">
           <el-table-column label="ID" align="center" key="id" prop="id" v-if="columns[0].visible"  width="240"/>
-
-          <el-table-column label="监测项目" align="center" key="username" prop="username" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
-          <el-table-column label="监测内容" align="center" key="nickname" prop="nickname" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
-          <el-table-column label="摊位" align="center" key="email" prop="email" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
-          <el-table-column label="监测结果" align="center" key="remark" prop="remark" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
+          <el-table-column label="地点" align="center" key="username" prop="username" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
+          <el-table-column label="人数" align="center" key="nickname" prop="nickname" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
           <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="240">
             <template v-slot="scope">
               <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
-          </el-table-column>
-          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+          </el-table-column><el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template v-slot="scope">
               <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                           v-hasPermi="['system:post:update']">修改</el-button>
@@ -71,35 +67,21 @@
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-
         <el-row>
           <el-col :span="12">
-            <el-form-item label="监测项目" prop="username">
-              <el-input v-model="form.username" placeholder="请输入监测项目" />
+            <el-form-item label="地点" prop="username">
+              <el-input v-model="form.username" placeholder="请输入地点" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="监测内容" prop="nickname">
-              <el-input v-model="form.nickname" placeholder="请输入监测内容" />
+            <el-form-item label="人数" prop="nickname">
+              <el-input v-model="form.nickname" placeholder="请输入人数" />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="摊位" prop="email">
-              <el-input v-model="form.email" placeholder="请输入摊位" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="监测结果" prop="remark">
-              <el-input v-model="form.remark" placeholder="请输入监测结果" />
-            </el-form-item>
-          </el-col>
-        </el-row>
+        
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -283,50 +265,32 @@ export default {
       this.loading = true;
       listUser(this.queryParams).then(response => {
           console.log(response.data.list)
-          response.data.list[0].username = '卫生条件'
-          response.data.list[0].email = 'A区1排22号摊位'
-          response.data.list[0].nickname = '卫生是否合格'
-          response.data.list[0].remark = '合格'
+          response.data.list[0].username = '东入口'
+          response.data.list[0].nickname = '20'
 
-          response.data.list[1].username = '卫生条件'
-          response.data.list[1].email = 'A区1排2号摊位'
-          response.data.list[1].nickname = '卫生是否合格'
-          response.data.list[1].remark = '合格'
+          response.data.list[1].username = '东入口'
+          response.data.list[1].nickname = '20'
 
-          response.data.list[2].username = '卫生条件'
-          response.data.list[2].email = 'A区1排3号摊位'
-          response.data.list[2].nickname = '卫生是否合格'
-          response.data.list[2].remark = '合格'
+          response.data.list[2].username = '东入口'
+          response.data.list[2].nickname = '20'
 
-          response.data.list[3].username = '卫生条件'
-          response.data.list[3].email = 'A区1排4号摊位'
-          response.data.list[3].nickname = '卫生是否合格'
-          response.data.list[3].remark = '合格'
+          response.data.list[3].username = '东入口'
+          response.data.list[3].nickname = '20'
 
-          response.data.list[4].username = '经营许可'
-          response.data.list[4].email = 'A区1排22号摊位'
-          response.data.list[4].nickname = '是否有许可证'
-          response.data.list[4].remark = '合格'
+          response.data.list[4].username = '东入口'
+          response.data.list[4].nickname = '20'
 
-          response.data.list[5].username = '经营许可'
-          response.data.list[5].email = 'A区1排22号摊位'
-          response.data.list[5].nickname = '是否有许可证'
-          response.data.list[5].remark = '合格'
+          response.data.list[5].username = '东入口'
+          response.data.list[5].nickname = '20'
 
-          response.data.list[6].username = '经营许可'
-          response.data.list[6].email = 'A区1排22号摊位'
-          response.data.list[6].nickname = '是否有许可证'
-          response.data.list[6].remark = '合格'
+          response.data.list[6].username = '东入口'
+          response.data.list[6].nickname = '20'
 
-          response.data.list[7].username = '经营许可'
-          response.data.list[7].email = 'A区1排22号摊位'
-          response.data.list[7].nickname = '是否有许可证'
-          response.data.list[7].remark = '合格'
+          response.data.list[7].username = '东入口'
+          response.data.list[7].nickname = '20'
 
-          response.data.list[8].username = '经营许可'
-          response.data.list[8].email = 'A区1排22号摊位'
-          response.data.list[8].nickname = '是否有许可证'
-          response.data.list[8].remark = '合格'
+          response.data.list[8].username = '东入口'
+          response.data.list[8].nickname = '20'
 
           this.userList = response.data.list;
           this.total = response.data.total;
@@ -466,7 +430,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id !== undefined) {
-            this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess("修改成功");
               this.open = false;
           } else {
             this.$modal.msgSuccess("新增成功");
@@ -490,6 +454,7 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
+      const ids = row.id || this.ids;
       this.$modal.msgSuccess("删除成功");
     },
     /** 导出按钮操作 */

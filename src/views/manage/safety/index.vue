@@ -48,6 +48,14 @@
           <el-table-column label="检测项目" align="center" key="remark" prop="remark" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
           <el-table-column label="检测结果" align="center" key="email" prop="email" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
           <el-table-column label="合格率" align="center" key="mobile" prop="mobile" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
+          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+            <template v-slot="scope">
+              <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+                          v-hasPermi="['system:post:update']">修改</el-button>
+              <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+                          v-hasPermi="['system:post:delete']">删除</el-button>
+            </template>
+          </el-table-column>
         </el-table>
 
         <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
@@ -60,21 +68,36 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="设备名称" prop="nickname">
-              <el-input v-model="form.nickname" placeholder="请输入设备名称" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="归属部门" prop="deptId">
-              <treeselect v-model="form.deptId" :options="deptOptions" :show-count="true" :clearable="false"
-                          placeholder="请选择归属部门" :normalizer="normalizer"/>
+            <el-form-item label="商户地址" prop="username">
+              <el-input v-model="form.username" placeholder="请输入商户地址" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24">
-            <el-form-item label="备注">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+          <el-col :span="12">
+            <el-form-item label="经营种类" prop="nickname">
+              <el-input v-model="form.nickname" placeholder="请输入经营种类" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="检测项目" prop="remark">
+              <el-input v-model="form.remark" placeholder="请输入检测项目" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="检测结果" prop="email">
+              <el-input v-model="form.email" placeholder="请输入检测结果" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="合格率" prop="mobile">
+              <el-input v-model="form.mobile" placeholder="请输入合格率" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -213,32 +236,6 @@ export default {
         { key: 5, label: `设备设备`, visible: true },
         { key: 6, label: `创建时间`, visible: true }
       ],
-      // 表单校验
-      rules: {
-        username: [
-          { required: true, message: "设备名称不能为空", trigger: "blur" }
-        ],
-        nickname: [
-          { required: true, message: "设备名称不能为空", trigger: "blur" }
-        ],
-        password: [
-          { required: true, message: "设备名称不能为空", trigger: "blur" }
-        ],
-        email: [
-          {
-            type: "email",
-            message: "'请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
-          }
-        ],
-        mobile: [
-          {
-            pattern: /^(?:(?:\+|00)86)?1(?:3[\d]|4[5-79]|5[0-35-9]|6[5-7]|7[0-8]|8[\d]|9[189])\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur"
-          }
-        ]
-      },
       // 是否显示弹出层（角色权限）
       openRole: false,
 
@@ -428,20 +425,14 @@ export default {
       this.getTreeselect();
       // 打开表单，并设置初始化
       this.open = true;
-      this.title = "添加设备";
+      this.title = "添加";
       this.form.password = this.initPassword;
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
-      this.getTreeselect();
-      const id = row.id;
-      getUser(id).then(response => {
-        this.form = response.data;
+      this.form = row;
         this.open = true;
-        this.title = "修改设备";
-        this.form.password = "";
-      });
+        this.title = "修改";
     },
     handleAlarmUpdate(row) {
       this.openAlarm = true
@@ -485,17 +476,11 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id !== undefined) {
-            updateUser(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+            this.$modal.msgSuccess("修改成功");
               this.open = false;
-              this.getList();
-            });
           } else {
-            addUser(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+            this.$modal.msgSuccess("新增成功");
               this.open = false;
-              this.getList();
-            });
           }
         }
       });
@@ -515,13 +500,7 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除设备编码为"' + ids + '"的数据项?').then(function() {
-          return delUser(ids);
-        }).then(() => {
-          this.getList();
-          this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal.msgSuccess("删除成功");
     },
     /** 导出按钮操作 */
     handleExport() {
